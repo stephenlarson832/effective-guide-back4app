@@ -1,0 +1,9 @@
+{
+  "name": "b4a-vless-free",
+  "version": "1.0.0",
+  "description": "Static background service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
