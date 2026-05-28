@@ -1,9 +1,12 @@
 {
-  "name": "b4a-vless-free",
-  "version": "1.0.0",
-  "description": "Static background service",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  }
+  "log": { "level": "info" },
+  "inbounds": [{
+    "type": "vless",
+    "tag": "vless-in",
+    "listen": "::",
+    "listen_port": 8080,
+    "users": [{ "uuid": "73e4a67d-49cf-44cf-b721-65d024e0e2e7" }],
+    "transport": { "type": "ws", "path": "/chat" }
+  }],
+  "outbounds": [{ "type": "direct", "tag": "direct" }]
 }
