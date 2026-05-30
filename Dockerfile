@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-# 同时下载 sing-box 和 cloudflared 官方程序
-RUN apk add --no-cache wget tar curl supervisor
+# 安装必要依赖、supervisor 以及 nodejs
+RUN apk add --no-cache wget tar curl supervisor nodejs
 
 WORKDIR /app
 
@@ -15,10 +15,13 @@ RUN wget https://github.com/SagerNet/sing-box/releases/download/v1.10.1/sing-box
 RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O /app/cloudflared && \
     chmod +x /app/cloudflared
 
+# 复制配置文件和手写的 JS 服务
 COPY config.json /app/config.json
+COPY vless_server.js /app/vless_server.js
+COPY keepalive.js /app/keepalive.js
 COPY supervisord.conf /etc/supervisord.conf
 
-# 暴露出端口供本地或CF隧道读取
+# 暴露端口给 Back4App 平台映射
 EXPOSE 8080
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
